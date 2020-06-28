@@ -1,0 +1,27 @@
+apiVersion: v1
+entries:
+  powerdns:
+  - apiVersion: v2
+    appVersion: 4.1.10
+    created: "2020-06-27T22:50:56.770749-04:00"
+    dependencies:
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://kubernetes-charts.storage.googleapis.com/
+      version: ~2.x
+    description: A Helm chart to deploy PowerDNS to Kubernetes
+    digest: 7e3b6c86e5fc9463e156bcb6bb629a886ec9dd1f8583589abcf3532c74101422
+    home: https://puckpuck.com
+    icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
+    keywords:
+    - dns
+    maintainers:
+    - email: pierre@pierretessier.com
+      name: puckpuck
+    name: powerdns
+    sources:
+    - https://github.com/PowerDNS/pdns
+    urls:
+    - powerdns-1.0.0.tgz
+    version: 1.0.0
+generated: "2020-06-27T22:50:56.76597-04:00"

@@ -1,0 +1,9 @@
+
+### Intellij ###
+.idea
+
+### macOS ###
+.DS_Store
+
+### Build ###
+_build/*
