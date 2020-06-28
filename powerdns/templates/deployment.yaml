@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "pdns.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ template "pdns.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "pdns.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "pdns.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: ["/entrypoint.sh"]
+        args: ["--api={{ .Values.pdns.api.enabled }}", "--api-key=$(POWERDNS_API_KEY)", "--webserver=yes", "--webserver-port=8081", "--webserver-address=0.0.0.0", "--webserver-allow-from={{ .Values.pdns.webserver.allowFrom }}", "--slave=yes", "--dnsupdate={{ .Values.pdns.dnsupdate.enabled }}"]
+        env:
+            - name: MYSQL_HOST
+            {{- if or (empty .Values.mariadb.serviceDiscovery) (eq .Values.mariadb.serviceDiscovery "dns") }}
+              value: {{ template "mariadb.fullname" . }}
+            {{- else if eq .Values.mariadb.serviceDiscovery "env" }}
+              value: {{ (include "mariadb.fullname" .) | replace "-" "_" | upper | printf "$(%s_SERVICE_HOST)" }}
+            {{- end }}
+            - name: MYSQL_USER
+              value: "root"
+              value: {{ .Values.mariadb.mariadbUser | quote }}
+            - name: MYSQL_PASS
+              value: {{ .Values.mariadb.mariadbPassword | quote }}
+            - name: MYSQL_DB
+              value: {{ .Values.mariadb.mariadbDatabase | quote }}
+            - name: POWERDNS_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: powerdns-api-key
+                  key: POWERDNS_API_KEY
+        ports:
+          - name: dns-udp
+            containerPort: 53
+            protocol: UDP
+          - name: dns-tcp
+            containerPort: 53
+            protocol: TCP
+          - name: api
+            containerPort: 8081
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: api
+        readinessProbe:
+          httpGet:
+            path: /
+            port: api
+        volumeMounts:
+        - name: config
+          mountPath: /etc/pdns/schema.sql
+          subPath: schema.sql              
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+      volumes:
+      - name: config
+        configMap:
+          name: {{ template "pdns.fullname" . }}          
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

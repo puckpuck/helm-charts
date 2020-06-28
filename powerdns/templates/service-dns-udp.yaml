@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "pdns.fullname" . }}-dns-udp
+  namespace: {{ .Release.Namespace }}  
+  labels:
+    app: {{ template "pdns.name" . }}
+  annotations:
+{{ toYaml .Values.service.annotations | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  {{- if .Values.service.ip }}
+  loadBalancerIP: {{ .Values.service.ip }}
+  {{- end}}
+  ports:
+    - port: 53
+      targetPort: 53
+      protocol: UDP
+      name: dns-udp
+  selector:
+    app: {{ template "pdns.name" . }}
+    release: {{ .Release.Name }}
