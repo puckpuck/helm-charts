@@ -21,11 +21,8 @@ options for this chart.
 
 | Parameter | Description | Default |
 | --- | --- | --- |
-| `powerdns.api.enabled` | Should the PowerDNS API be enabled | `true` |
 | `powerdns.api.key` | PowerDNS API key | `PowerDNSAPI` |
-| `powerdns.webserver.allowFrom` | PowerDNS webserver allowed IP whitelist | `0.0.0.0/0` |
-| `powerdns.dnsupdate.enabled` | Should DNS UPDATE support be enabled | `false` |
-| `powerdns.zoneConfig` | Used to specify an initial DNS zone configuration as SQL commands. | `nil` | 
+| `powerdns.initDomains` | List of domains to configure on startup | `[]` | 
 | `replicaCount` | Number of pdns nodes | `1` |
 | `image.repository` | PowerDNS Image repository | `psitrax/powerdns` |
 | `image.tag` | PowerDNS Image tag (leave blank to use app version) | `nil` |
@@ -42,20 +39,6 @@ options for this chart.
 | `mariadb.db.name` | Database name to create | `powerdns` |
 | `mariadb.db.user` | Database user to create | `powerdns` |
 | `mariadb.db.password` | Password for the database | `powerdns` |
-
-### Specifying Initial Zone Configuration
-
-You can specify an initial Zone configuration with SQL `INSERT ...` commands. This will require 2 statements. One to add the domain, the next to set the domain's primary record. The following will create a sample initial zone called `my.sample.domain` with 60 second TTL and refresh settings. See PowerDNS [docs](https://doc.powerdns.com/authoritative/) for more info on record format.
-
-```yaml
-pdns:
-  zoneConfig: |
-    INSERT INTO domains (name, type, notified_serial) 
-    VALUES ('my.sample.domain', 'MASTER', 24);
-    
-    INSERT INTO records (domain_id, name, type, content, ttl, prio)
-    VALUES (1, 'my.sample.domain', 'SOA', 'k8s.powerdns.server hostmaster.my.sample.domain 24 60 60 60 60', 60, 0);
-```
 
 ### Supporting TCP and UDP on the same LoadBalanced service
 

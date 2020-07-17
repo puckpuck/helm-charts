@@ -23,7 +23,14 @@ spec:
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: ["/entrypoint.sh"]
-        args: ["--api={{ .Values.powerdns.api.enabled }}", "--api-key=$(POWERDNS_API_KEY)", "--webserver=yes", "--webserver-port=8081", "--webserver-address=0.0.0.0", "--webserver-allow-from={{ .Values.powerdns.webserver.allowFrom }}", "--slave=yes", "--dnsupdate={{ .Values.powerdns.dnsupdate.enabled }}"]
+        args: 
+          - "--api=yes"
+          - "--api-key=$(POWERDNS_API_KEY)"
+          - "--webserver=yes"
+          - "--webserver-port=8081"
+          - "--webserver-address=0.0.0.0"
+          - "--webserver-allow-from=0.0.0.0/0"
+          - "--slave=yes"
         env:
             - name: MYSQL_HOST
               value: {{ template "mariadb.fullname" . }}

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: powerdns
 description: A Helm chart to deploy PowerDNS to Kubernetes
-version: 1.0.0
+version: 1.1.0
 appVersion: 4
 keywords:
   - dns

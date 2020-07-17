@@ -95,6 +95,11 @@ data:
     ) Engine=InnoDB CHARACTER SET 'latin1';
 
     CREATE UNIQUE INDEX namealgoindex ON tsigkeys(name, algorithm);
-{{ if .Values.powerdns.zoneConfig }}
-{{ .Values.powerdns.zoneConfig | indent 4 }}
-{{- end -}}      
+
+    {{ range .Values.powerdns.initDomains }}
+    INSERT INTO domains (name, type, notified_serial) 
+    VALUES ('{{ . }}', 'MASTER', 24);
+    
+    INSERT INTO records (domain_id, name, type, content, ttl, prio)
+    VALUES (1, '{{ . }}', 'SOA', 'k8s.powerdns.server hostmaster.{{ . }} 24 60 60 60 60', 60, 0);
+    {{- end }}
