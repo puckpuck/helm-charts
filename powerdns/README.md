@@ -11,6 +11,8 @@ helm install powerdns puckpuck/powerdns
 
 ## Installing the chart
 
+It's **strongly recommended** you create a values yaml file (ie: my-values.yaml) to configure this chart.
+
 The chart can be configured on startup to work with a list of domains. This should be done as part of the `powerdns.initDomains` property.
 
 ```yaml
@@ -28,6 +30,13 @@ service:
     metallb.universe.tf/allow-shared-ip: powerdns
   # force ip address
   # ip: 192.168.1.100
+```
+
+Once you have a values yaml file configured with all your [options](#parameters) you can install the chart
+
+```bash
+helm repo add puckpuck https://puckpuck.github.io/helm-charts
+helm install powerdns puckpuck/powerdns --values my-values.yaml
 ```
 
 ## Configuration
