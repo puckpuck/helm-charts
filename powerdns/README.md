@@ -45,7 +45,7 @@ options for this chart.
 
 ### Specifying Initial Zone Configuration
 
-You can specify an initial Zone configuration with SQL `INSERT ...` commands. This will require 2 statements. One to add the domain, the next to set the domains primary record. The following will create a sample initial zone called `my.sample.domain` with 60 second TTL and refresh settings. See PowerDNS [docs](https://doc.powerdns.com/authoritative/) for more info on record format.
+You can specify an initial Zone configuration with SQL `INSERT ...` commands. This will require 2 statements. One to add the domain, the next to set the domain's primary record. The following will create a sample initial zone called `my.sample.domain` with 60 second TTL and refresh settings. See PowerDNS [docs](https://doc.powerdns.com/authoritative/) for more info on record format.
 
 ```yaml
 pdns:
