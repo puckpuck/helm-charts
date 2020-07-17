@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "pdns.fullname" . }}
-  namespace: {{ .Release.Namespace }}  
+  name: {{ template "powerdns.fullname" . }}
   labels:
-    app: {{ template "pdns.name" . }}
+    app: {{ template "powerdns.name" . }}
 data:
   schema.sql: |
     CREATE TABLE domains (
@@ -96,6 +95,6 @@ data:
     ) Engine=InnoDB CHARACTER SET 'latin1';
 
     CREATE UNIQUE INDEX namealgoindex ON tsigkeys(name, algorithm);
-{{ if .Values.pdns.zoneConfig }}
-{{ .Values.pdns.zoneConfig | indent 4 }}
+{{ if .Values.powerdns.zoneConfig }}
+{{ .Values.powerdns.zoneConfig | indent 4 }}
 {{- end -}}      

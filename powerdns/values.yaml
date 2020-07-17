@@ -1,22 +1,32 @@
-# Default values for pdns.
+# Default values for powerdns.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-pdns:
+powerdns:
   api:
-    enabled: true
+    enabled: yes
     key: PowerDNSAPI
   webserver:
     allowFrom: 0.0.0.0/0
   dnsupdate:
-    enabled: false
-  # zoneConfig: 
+    enabled: no
+
+  # zoneConfig is used to initialize zones on startup with SQL INSERT commands
+  # see PowerDNS docs on proper zone config record formats
+  # zoneConfig: |
+  #   INSERT INTO domains (name, type, notified_serial) 
+  #   VALUES ('my.sample.domain', 'MASTER', 24);
+    
+  #   INSERT INTO records (domain_id, name, type, content, ttl, prio)
+  #   VALUES (1, 'my.sample.domain', 'SOA', 'k8s.powerdns.server hostmaster.my.sample.domain 24 60 60 60 60', 60, 0);  
+
 
 replicaCount: 1
 
 image:
   repository: psitrax/powerdns
-  tag: 4.1.10
+  # leave tag blank to use app version
+  tag:
   pullPolicy: IfNotPresent
 
 service:
@@ -46,52 +56,24 @@ affinity: {}
 ## MariaDB chart configuration
 ##
 mariadb:
-  ## Whether to use the database specified as a requirement or not.
-  ## If you want to use a MariaDB database deployed to Kubernetes instead of
-  ## Azure Database for MySQL, set this to true.
   enabled: true
 
-  ## MariaDB admin password
-  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#setting-the-root-password-on-first-run
-  ##
-  # mariadbRootPassword: 
+  rootUser:
+    password: 
 
-  ## Create a database
-  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-on-first-run
-  ##
-  mariadbDatabase: powerdns
+  db:
+    ## MariaDB username and password
+    user: powerdns
+    password: powerdns
+    ## Database to create
+    name: powerdns
 
-  ## Create a database user
-  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
-  ##
-  mariadbUser: powerdns
-
-  ## Password for mariadbUser
-  ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
-  ##
-  mariadbPassword: powerdns
-
-  ## Enable persistence using Persistent Volume Claims
-  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
-  ##
-  ## Enable persistence using Persistent Volume Claims
-  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
-  ##
-  persistence:
+  replication:
     enabled: false
-    ## mariadb data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-    accessMode: ReadWriteOnce
-    size: 500Mi
 
-  ## How the MariaDB host address is discovered:
-  ## dns: using service name of mariadb, requires working dns in cluster (default)
-  ## env: using service ip of mariadb by using the exposed env of the mariadb service
-  serviceDiscovery: dns
-  
+  master:
+    persistence:
+      enabled: false
+
+  tests:
+    enabled: false

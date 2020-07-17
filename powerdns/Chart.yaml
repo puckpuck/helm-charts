@@ -2,14 +2,14 @@ apiVersion: v2
 name: powerdns
 description: A Helm chart to deploy PowerDNS to Kubernetes
 version: 1.0.0
-appVersion: 4.1.10
+appVersion: 4
 keywords:
   - dns
 home: https://puckpuck.com
 dependencies:
 - name: mariadb
-  version: ~2.x
-  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 7
+  repository: https://charts.bitnami.com/bitnami
   condition: mariadb.enabled
 sources:
   - https://github.com/PowerDNS/pdns

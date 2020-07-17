@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "pdns.fullname" . }}-dns-tcp
-  namespace: {{ .Release.Namespace }}  
+  name: {{ template "powerdns.fullname" . }}-dns-tcp
   labels:
-    app: {{ template "pdns.name" . }}
+    app: {{ template "powerdns.name" . }}
   annotations:
 {{ toYaml .Values.service.annotations | indent 4 }}
 spec:
@@ -18,5 +17,5 @@ spec:
       protocol: TCP
       name: dns-tcp
   selector:
-    app: {{ template "pdns.name" . }}
+    app: {{ template "powerdns.name" . }}
     release: {{ .Release.Name }}

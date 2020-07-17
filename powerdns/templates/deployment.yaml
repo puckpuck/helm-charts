@@ -1,47 +1,52 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "pdns.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  name: {{ template "powerdns.fullname" . }}
   labels:
-    app: {{ template "pdns.name" . }}
+    app: {{ template "powerdns.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "pdns.name" . }}
+      app: {{ template "powerdns.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "pdns.name" . }}
+        app: {{ template "powerdns.name" . }}
         release: {{ .Release.Name }}
+      annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: ["/entrypoint.sh"]
-        args: ["--api={{ .Values.pdns.api.enabled }}", "--api-key=$(POWERDNS_API_KEY)", "--webserver=yes", "--webserver-port=8081", "--webserver-address=0.0.0.0", "--webserver-allow-from={{ .Values.pdns.webserver.allowFrom }}", "--slave=yes", "--dnsupdate={{ .Values.pdns.dnsupdate.enabled }}"]
+        args: ["--api={{ .Values.powerdns.api.enabled }}", "--api-key=$(POWERDNS_API_KEY)", "--webserver=yes", "--webserver-port=8081", "--webserver-address=0.0.0.0", "--webserver-allow-from={{ .Values.powerdns.webserver.allowFrom }}", "--slave=yes", "--dnsupdate={{ .Values.powerdns.dnsupdate.enabled }}"]
         env:
             - name: MYSQL_HOST
-            {{- if or (empty .Values.mariadb.serviceDiscovery) (eq .Values.mariadb.serviceDiscovery "dns") }}
               value: {{ template "mariadb.fullname" . }}
-            {{- else if eq .Values.mariadb.serviceDiscovery "env" }}
-              value: {{ (include "mariadb.fullname" .) | replace "-" "_" | upper | printf "$(%s_SERVICE_HOST)" }}
-            {{- end }}
             - name: MYSQL_USER
-              value: "root"
-              value: {{ .Values.mariadb.mariadbUser | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "powerdns.fullname" . }}
+                  key: db-user
             - name: MYSQL_PASS
-              value: {{ .Values.mariadb.mariadbPassword | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "powerdns.fullname" . }}
+                  key: db-password
             - name: MYSQL_DB
-              value: {{ .Values.mariadb.mariadbDatabase | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "powerdns.fullname" . }}
+                  key: db-name
             - name: POWERDNS_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: powerdns-api-key
-                  key: POWERDNS_API_KEY
+                  name: {{ template "powerdns.fullname" . }}
+                  key: api-key
         ports:
           - name: dns-udp
             containerPort: 53
@@ -69,7 +74,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: {{ template "pdns.fullname" . }}          
+          name: {{ template "powerdns.fullname" . }}          
     {{- with .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}

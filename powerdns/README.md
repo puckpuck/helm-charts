@@ -21,11 +21,11 @@ options for this chart.
 
 | Parameter | Description | Default |
 | --- | --- | --- |
-| `pdns.api.enabled` | Should the PowerDNS API be enabled | `true` |
-| `pdns.api.key` | PowerDNS API key | `PowerDNSAPI` |
-| `pdns.webserver.allowFrom` | PowerDNS webserver allowed IP whitelist | `0.0.0.0/0` |
-| `pdns.dnsupdate.enabled` | Should DNS UPDATE support be enabled | `false` |
-| `pdns.zoneConfig` | Used to specify an initial DNS zone configuration as SQL commands. | `nil` | 
+| `powerdns.api.enabled` | Should the PowerDNS API be enabled | `true` |
+| `powerdns.api.key` | PowerDNS API key | `PowerDNSAPI` |
+| `powerdns.webserver.allowFrom` | PowerDNS webserver allowed IP whitelist | `0.0.0.0/0` |
+| `powerdns.dnsupdate.enabled` | Should DNS UPDATE support be enabled | `false` |
+| `powerdns.zoneConfig` | Used to specify an initial DNS zone configuration as SQL commands. | `nil` | 
 | `replicaCount` | Number of pdns nodes | `1` |
 | `image.repository` | PowerDNS Image repository | `psitrax/powerdns` |
 | `image.tag` | PowerDNS Image tag (leave blank to use app version) | `nil` |
@@ -38,16 +38,10 @@ options for this chart.
 | `tolerations` | Toleration labels for pod assignment | `[]` |
 | `affinity` | Affinity settings for pod assignment | `{}` |
 | `mariadb.enabled` | Deploy MariaDB container(s) | `true` |
-| `mariadb.mariadbRootPassword` | MariaDB admin password | `nil` |
-| `mariadb.mariadbDatabase` | Database name to create | `powerdns` |
-| `mariadb.mariadbUser` | Database user to create | `powerdns` |
-| `mariadb.mariadbPassword` | Password for the database | `powerdns` |
-| `mariadb.persistence.enabled` | Enable persistence using PVC | `false` |
-| `mariadb.persistence.existingClaim` | Enable persistence using an existing PVC | `nil` |
-| `mariadb.persistence.storageClass` | PVC Storage Class | `nil` (uses alpha storage class annotation) |
-| `mariadb.persistence.accessMode` | PVC Access Mode | `ReadWriteOnce` |
-| `mariadb.persistence.size` | PVC Storage Request | `500Mi` |
-| `mariadb.serviceDiscovery` | Discovery of mariadb service. One of: dns, env | `dns` |
+| `mariadb.rootUser.password` | MariaDB admin password | `nil` |
+| `mariadb.db.name` | Database name to create | `powerdns` |
+| `mariadb.db.user` | Database user to create | `powerdns` |
+| `mariadb.db.password` | Password for the database | `powerdns` |
 
 ### [Specifying Initial Zone Configuration](#zone-config)
 
@@ -60,7 +54,7 @@ pdns:
     VALUES ('my.sample.domain', 'MASTER', 24);
     
     INSERT INTO records (domain_id, name, type, content, ttl, prio)
-    VALUES (1, 'my.sample.domain', 'SOA', 'k8s.pdns.server hostmaster.my.sample.domain 24 60 60 60 60', 60, 0);
+    VALUES (1, 'my.sample.domain', 'SOA', 'k8s.powerdns.server hostmaster.my.sample.domain 24 60 60 60 60', 60, 0);
 ```
 
 ### Supporting TCP and UDP on the same LoadBalanced service
