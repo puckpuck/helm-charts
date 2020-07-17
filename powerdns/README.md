@@ -43,7 +43,7 @@ options for this chart.
 | `mariadb.db.user` | Database user to create | `powerdns` |
 | `mariadb.db.password` | Password for the database | `powerdns` |
 
-### [Specifying Initial Zone Configuration](#zone-config)
+### Specifying Initial Zone Configuration
 
 You can specify an initial Zone configuration with SQL `INSERT ...` commands. This will require 2 statements. One to add the domain, the next to set the domains primary record. The following will create a sample initial zone called `my.sample.domain` with 60 second TTL and refresh settings. See PowerDNS [docs](https://doc.powerdns.com/authoritative/) for more info on record format.
 
