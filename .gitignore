@@ -1,3 +1,5 @@
+### Helm ###
+**/charts/*.tgz
 
 ### Intellij ###
 .idea
