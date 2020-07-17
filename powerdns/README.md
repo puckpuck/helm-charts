@@ -9,8 +9,26 @@ helm repo add puckpuck https://puckpuck.github.io/helm-charts
 helm install powerdns puckpuck/powerdns
 ```
 
-> Note: This will leave you with a PowerDNS server deployed to your k8s cluster. You will also need to configure some means of accesibility from the outside world for the DNS server to be accesible. You can do it by setting your service type to LoadBalancer and using annotations to ensure both TCP/UDP can be accessed.
+## Installing the chart
 
+The chart can be configured on startup to work with a list of domains. This should be done as part of the `powerdns.initDomains` property.
+
+```yaml
+powerdns:
+  initDomains:
+    - k8s.my.sample.domain
+```
+
+You will also need to configure some means of accesibility from the outside world for the DNS server to be accesible. You can do it by setting your service type to LoadBalancer and using annotations to ensure both TCP/UDP can be accessed. Kubernetes has limitations about allowing the same port to be used for both TCP and UDP protocols. Some LoadBalancer providers can get around this (ie: MetalLB) using service annotations. A potential MetalLB setup would be:
+
+```yaml
+service:
+  type: LoadBalancer
+  annotations:
+    metallb.universe.tf/allow-shared-ip: powerdns
+  # force ip address
+  # ip: 192.168.1.100
+```
 
 ## Configuration
 
@@ -39,14 +57,3 @@ options for this chart.
 | `mariadb.db.name` | Database name to create | `powerdns` |
 | `mariadb.db.user` | Database user to create | `powerdns` |
 | `mariadb.db.password` | Password for the database | `powerdns` |
-
-### Supporting TCP and UDP on the same LoadBalanced service
-
-Kubernetes has limitations about allowing the same port to be used for both TCP and UDP protocols. Some LoadBalancer providers can get around this (ie: MetalLB) using service annotations. A potential MetalLB setup would be:
-
-```yaml
-service:
-  type: LoadBalancer
-  annotations:
-    metallb.universe.tf/allow-shared-ip: powerdns 
-```
