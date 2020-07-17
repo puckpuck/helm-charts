@@ -3,14 +3,14 @@ entries:
   powerdns:
   - apiVersion: v2
     appVersion: "4"
-    created: "2020-07-17T00:23:50.2877-04:00"
+    created: "2020-07-17T00:33:42.75608-04:00"
     dependencies:
     - condition: mariadb.enabled
       name: mariadb
       repository: https://charts.bitnami.com/bitnami
       version: "7"
     description: A Helm chart to deploy PowerDNS to Kubernetes
-    digest: b5e07ccc6a1656c50601376f67f2698eb8d0ce66bad7c02a4291f17a89ce2093
+    digest: 2a0728639bf596b3b1f1a1b67120489f5b4a38dcf54045ca91595b150349ee5c
     home: https://puckpuck.com
     icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
     keywords:
@@ -47,4 +47,4 @@ entries:
     urls:
     - powerdns-1.0.0.tgz
     version: 1.0.0
-generated: "2020-07-17T00:23:50.282328-04:00"
+generated: "2020-07-17T00:33:42.75166-04:00"
