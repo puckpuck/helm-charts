@@ -41,8 +41,7 @@ helm install powerdns puckpuck/powerdns --values my-values.yaml
 
 ## Configuration
 
-The [values.yaml](./values.yaml) file contains information about all configuration
-options for this chart.
+The [values.yaml](values.yaml) file contains information about all configuration options for this chart.
 
 ## Parameters
 
