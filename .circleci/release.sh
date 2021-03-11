@@ -76,33 +76,7 @@ release_charts() {
 }
 
 update_index() {
-    cr index --charts-repo "$CHARTS_REPO" -owner "$GIT_USERNAME" -git-repo "$GIT_REPOSITORY_NAME" --package-path .deploy/index.yaml --push
-
-    # git config user.email "$GIT_EMAIL"
-    # git config user.name "$GIT_USERNAME"
-
-    # for file in charts/*/*.md; do
-    #     if [[ -e $file ]]; then
-    #         mkdir -p ".deploy/docs/$(dirname "$file")"
-    #         cp --force "$file" ".deploy/docs/$(dirname "$file")"
-    #     fi
-    # done
-
-    # git checkout gh-pages
-    # cp --force .deploy/index.yaml index.yaml
-
-    # if [[ -e ".deploy/docs/charts" ]]; then
-    #     mkdir -p charts
-    #     cp --force --recursive .deploy/docs/charts/* charts/
-    # fi
-
-    # git checkout master -- README.md
-
-    # if ! git diff --quiet; then
-    #     git add .
-    #     git commit --message="Update index.yaml" --signoff
-    #     git push "$GIT_REPOSITORY_URL" gh-pages
-    # fi
+    cr index --charts-repo "$CHARTS_REPO" -owner "$GIT_USERNAME" --git-repo "$GIT_REPOSITORY_NAME" --package-path .deploy/index.yaml --push
 }
 
 main
