@@ -9,6 +9,7 @@ set -o pipefail
 : "${GIT_USERNAME:?Environment variable GIT_USERNAME must be set}"
 : "${GIT_EMAIL:?Environment variable GIT_EMAIL must be set}"
 : "${GIT_REPOSITORY_NAME:?Environment variable GIT_REPOSITORY_NAME must be set}"
+: "${CHARTS_REPO:?Environment variable CHARTS_REPO must be set}"
 
 readonly REPO_ROOT="${REPO_ROOT:-$(git rev-parse --show-toplevel)}"
 
@@ -71,37 +72,37 @@ package_chart() {
 }
 
 release_charts() {
-    cr upload -o "$GIT_USERNAME" -r "$GIT_REPOSITORY_NAME" -p .deploy
+    cr upload --owner "$GIT_USERNAME" --git-repo "$GIT_REPOSITORY_NAME" --package-path .deploy
 }
 
 update_index() {
-    cr index -o "$GIT_USERNAME" -r "$GIT_REPOSITORY_NAME" -p .deploy/index.yaml
+    cr index --charts-repo "$CHARTS_REPO" -owner "$GIT_USERNAME" -git-repo "$GIT_REPOSITORY_NAME" --package-path .deploy/index.yaml --push
 
-    git config user.email "$GIT_EMAIL"
-    git config user.name "$GIT_USERNAME"
+    # git config user.email "$GIT_EMAIL"
+    # git config user.name "$GIT_USERNAME"
 
-    for file in charts/*/*.md; do
-        if [[ -e $file ]]; then
-            mkdir -p ".deploy/docs/$(dirname "$file")"
-            cp --force "$file" ".deploy/docs/$(dirname "$file")"
-        fi
-    done
+    # for file in charts/*/*.md; do
+    #     if [[ -e $file ]]; then
+    #         mkdir -p ".deploy/docs/$(dirname "$file")"
+    #         cp --force "$file" ".deploy/docs/$(dirname "$file")"
+    #     fi
+    # done
 
-    git checkout gh-pages
-    cp --force .deploy/index.yaml index.yaml
+    # git checkout gh-pages
+    # cp --force .deploy/index.yaml index.yaml
 
-    if [[ -e ".deploy/docs/charts" ]]; then
-        mkdir -p charts
-        cp --force --recursive .deploy/docs/charts/* charts/
-    fi
+    # if [[ -e ".deploy/docs/charts" ]]; then
+    #     mkdir -p charts
+    #     cp --force --recursive .deploy/docs/charts/* charts/
+    # fi
 
-    git checkout master -- README.md
+    # git checkout master -- README.md
 
-    if ! git diff --quiet; then
-        git add .
-        git commit --message="Update index.yaml" --signoff
-        git push "$GIT_REPOSITORY_URL" gh-pages
-    fi
+    # if ! git diff --quiet; then
+    #     git add .
+    #     git commit --message="Update index.yaml" --signoff
+    #     git push "$GIT_REPOSITORY_URL" gh-pages
+    # fi
 }
 
 main
