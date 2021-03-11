@@ -67,18 +67,18 @@ find_latest_tag() {
 
 package_chart() {
     local chart="$1"
-    helm dependency build "$chart"
-    helm package "$chart" --destination .cr-release-packages
+    cr package "$chart"
+    # helm dependency build "$chart"
+    # helm package "$chart" --destination .cr-release-packages
 }
 
 release_charts() {
-    cr upload --git-repo "$GIT_REPOSITORY_NAME" --owner "$GIT_USERNAME" --package-path .cr-release-packages
+    cr upload --git-repo "$GIT_REPOSITORY_NAME" --owner "$GIT_USERNAME" 
 }
 
 update_index() {
-    # mkdir .cr-index
-    # curl -L "$CHARTS_REPO/index.yaml" -o .cr-index/index.yaml
-    cr index --charts-repo "$CHARTS_REPO" --git-repo "$GIT_REPOSITORY_NAME" --owner "$GIT_USERNAME" --package-path .cr-release-packages --push
+    mkdir .cr-index
+    cr index --charts-repo "$CHARTS_REPO" --git-repo "$GIT_REPOSITORY_NAME" --owner "$GIT_USERNAME" --push
 }
 
 main
