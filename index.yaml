@@ -3,6 +3,29 @@ entries:
   powerdns:
   - apiVersion: v2
     appVersion: "4"
+    created: "2021-03-11T03:20:11.037689804Z"
+    dependencies:
+    - condition: mariadb.enabled
+      name: mariadb
+      repository: https://charts.bitnami.com/bitnami
+      version: "7"
+    description: Deploy PowerDNS with configured domains
+    digest: cf36748b44473bed3cd266d3fc04c4ee85dc8b7364fad74e90d449be647c3d47
+    home: https://puckpuck.com
+    icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
+    keywords:
+    - dns
+    maintainers:
+    - email: pierre@pierretessier.com
+      name: puckpuck
+    name: powerdns
+    sources:
+    - https://github.com/PowerDNS/pdns
+    urls:
+    - https://github.com/puckpuck/helm-charts/releases/download/powerdns-1.1.1/powerdns-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
+    appVersion: "4"
     created: "2020-07-17T10:46:33.733326-04:00"
     dependencies:
     - condition: mariadb.enabled
@@ -47,4 +70,4 @@ entries:
     urls:
     - powerdns-1.0.0.tgz
     version: 1.0.0
-generated: "2020-07-17T10:46:33.72652-04:00"
+generated: "2021-03-11T03:20:11.037716433Z"
