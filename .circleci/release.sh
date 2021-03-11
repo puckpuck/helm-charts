@@ -68,8 +68,6 @@ find_latest_tag() {
 package_chart() {
     local chart="$1"
     cr package "$chart"
-    # helm dependency build "$chart"
-    # helm package "$chart" --destination .cr-release-packages
 }
 
 release_charts() {
@@ -77,6 +75,9 @@ release_charts() {
 }
 
 update_index() {
+    git config user.email "$GIT_EMAIL"
+    git config user.name "$GIT_USERNAME"
+
     mkdir .cr-index
     cr index --charts-repo "$CHARTS_REPO" --git-repo "$GIT_REPOSITORY_NAME" --owner "$GIT_USERNAME" --push
 }
