@@ -71,11 +71,11 @@ package_chart() {
 }
 
 release_charts() {
-    chart-releaser upload -o "$GIT_USERNAME" -r "$GIT_REPOSITORY_NAME" -p .deploy
+    cr upload -o "$GIT_USERNAME" -r "$GIT_REPOSITORY_NAME" -p .deploy
 }
 
 update_index() {
-    chart-releaser index -o "$GIT_USERNAME" -r "$GIT_REPOSITORY_NAME" -p .deploy/index.yaml
+    cr index -o "$GIT_USERNAME" -r "$GIT_REPOSITORY_NAME" -p .deploy/index.yaml
 
     git config user.email "$GIT_EMAIL"
     git config user.name "$GIT_USERNAME"
