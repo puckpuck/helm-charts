@@ -21,7 +21,11 @@ powerdns:
     - k8s.my.sample.domain
 ```
 
-You will also need to configure some means of accesibility from the outside world for the DNS server to be accesible. You can do it by setting your service type to LoadBalancer and using annotations to ensure both TCP/UDP can be accessed. Kubernetes has limitations about allowing the same port to be used for both TCP and UDP protocols. Some LoadBalancer providers can get around this (ie: MetalLB) using service annotations. A potential MetalLB setup would be:
+You will also need to configure some means of accesibility from the outside world for the DNS server to be accesible. 
+You can do it by setting your service type to LoadBalancer and using annotations to ensure both TCP/UDP can be accessed. 
+Kubernetes has limitations about allowing the same port to be used for both TCP and UDP protocols. 
+Some LoadBalancer providers can get around this (ie: MetalLB) using service annotations. 
+A potential MetalLB setup would be:
 
 ```yaml
 service:
