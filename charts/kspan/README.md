@@ -10,7 +10,9 @@ compatible backend.
 ## Installing the Chart
 
 You will likely need to configure multiple `args` and optionally the `env` parameter as well. These are array style
-parameters which are best configured within a custom values file.
+parameters which are best configured within a custom values file. These parameters are used to configure the
+command-line arguments for kspan, as well as any optional environment variables you may want to set up to pass in
+sensitive data.
 
 The configuration will be based on the specific OTLP enabled backend that you are using. This example demonstrates how
 to configure for use with [Honeycomb.io](https://honeycomb.io) by referencing an existing secret for the API key.
@@ -46,7 +48,7 @@ The [values.yaml](values.yaml) file contains information about all configuration
 | --- | --- | --- |
 | `args` | Array of command arguments to pass into the kspan process | `[]` |
 | `env` | Array of environment variables to set on the kspan pod | `[]` |
-| `image.repository` | PowerDNS Image repository | `psitrax/powerdns` |
+| `image.repository` | PowerDNS Image repository | `puckpuck/kspan` |
 | `image.tag` | PowerDNS Image tag (leave blank to use app version) | `nil` |
 | `image.pullPolicy` | PowerDNS Image pull policy | `IfNotPresent` |
 | `resources` | CPU/Memory resource limits/requests | `{}` |
