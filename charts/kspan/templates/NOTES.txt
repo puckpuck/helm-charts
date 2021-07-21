@@ -1,0 +1,2 @@
+kspan is configured and install in your cluster.
+Based on what you configured for `args` and optionally `env` you will see your Kubernetes traces appear.

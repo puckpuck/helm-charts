@@ -1,0 +1,19 @@
+apiVersion: v2
+name: kspan
+description: Install and configure kspan
+type: application
+version: 0.1.0
+appVersion: 0.1.1
+keywords:
+  - kspan
+  - tracing
+  - observability
+  - o11y
+sources:
+  - https://github.com/puckpuck/kspan
+  - https://github.com/weaveworks-experiments/kspan
+maintainers:
+  - name: puckpuck
+    email: pierre@pierretessier.com
+  - name: bboreham
+    email: bjboreham@gmail.com
