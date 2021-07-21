@@ -1,20 +1,20 @@
 #!/bin/bash
 
 function print_usage_and_exit() {
-    echo "Failure: $1"
-    echo "Usage: $0 CHART_NAME"
-    echo "Example: $0 honeycomb"
-    exit 1
+  echo "Failure: $1"
+  echo "Usage: $0 CHART_NAME"
+  echo "Example: $0 honeycomb"
+  exit 1
 }
 
 CHART_NAME=$1
-if [[ -z $CHART_NAME ]] ; then
-    print_usage_and_exit "Chart name is required"
+if [[ -z $CHART_NAME ]]; then
+  print_usage_and_exit "Chart name is required"
 fi
 
-if [[ -z $(command -v helm) ]] ; then
-    echo "Failure: helm not found"
-    exit 1
+if [[ -z $(command -v helm) ]]; then
+  echo "Failure: helm not found"
+  exit 1
 fi
 
 # initialize build variables
@@ -27,20 +27,20 @@ mkdir ${BUILD_DIR}
 
 # create new tgz
 echo "creating new ${CHART_NAME} helm package"
-if ! helm package -d ${BUILD_DIR} "./charts/${CHART_NAME}" ; then
-    echo "Failure: error creating helm package"
-    exit 1
+if ! helm package -d ${BUILD_DIR} "./charts/${CHART_NAME}"; then
+  echo "Failure: error creating helm package"
+  exit 1
 fi
 
 # download current index.yaml
 echo "downloading latest index.yaml to ${INDEX_FILE}"
-curl -sL https://raw.githubusercontent.com/puckpuck/helm-charts/gh-pages/index.yaml > ${INDEX_FILE}
+curl -sL https://raw.githubusercontent.com/puckpuck/helm-charts/gh-pages/index.yaml >${INDEX_FILE}
 
 echo "generating updated index.yaml"
 helm repo index --merge "${INDEX_FILE}" ${BUILD_DIR}
 
 echo "Finished! New index and package files can be found under ${BUILD_DIR}"
 echo "Run this command to update the helm chart"
-echo 
+echo
 echo " git checkout gh-pages && cp ${BUILD_DIR}/* ."
 echo
