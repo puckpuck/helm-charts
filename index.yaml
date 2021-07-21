@@ -38,60 +38,60 @@ entries:
     home: https://puckpuck.com
     icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
     keywords:
-    - dns
+      - dns
     maintainers:
-    - email: pierre@pierretessier.com
-      name: puckpuck
+      - email: pierre@pierretessier.com
+        name: puckpuck
     name: powerdns
     sources:
-    - https://github.com/PowerDNS/pdns
+      - https://github.com/PowerDNS/pdns
     urls:
-    - https://github.com/puckpuck/helm-charts/releases/download/powerdns-1.1.1/powerdns-1.1.1.tgz
+      - https://github.com/puckpuck/helm-charts/releases/download/powerdns-1.1.1/powerdns-1.1.1.tgz
     version: 1.1.1
-  - apiVersion: v2
-    appVersion: "4"
-    created: "2020-07-17T10:46:33.733326-04:00"
-    dependencies:
-    - condition: mariadb.enabled
-      name: mariadb
-      repository: https://charts.bitnami.com/bitnami
-      version: "7"
-    description: A Helm chart to deploy PowerDNS to Kubernetes
-    digest: 1b575004fd523ef77c005ecc41e40dc2bfc0ac2dc8252e8b7ad7dac0397691ec
-    home: https://puckpuck.com
-    icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
-    keywords:
-    - dns
-    maintainers:
-    - email: pierre@pierretessier.com
-      name: puckpuck
-    name: powerdns
-    sources:
-    - https://github.com/PowerDNS/pdns
-    urls:
-    - powerdns-1.1.0.tgz
-    version: 1.1.0
-  - apiVersion: v2
-    appVersion: "4"
-    created: "2020-07-16T22:50:23.101243-04:00"
-    dependencies:
-    - condition: mariadb.enabled
-      name: mariadb
-      repository: https://charts.bitnami.com/bitnami
-      version: "7"
-    description: A Helm chart to deploy PowerDNS to Kubernetes
-    digest: aaedd53673ca7358d8d870cd6fbdfdf919e30df0d388a3040d6f56bb38c76705
-    home: https://puckpuck.com
-    icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
-    keywords:
-    - dns
-    maintainers:
-    - email: pierre@pierretessier.com
-      name: puckpuck
-    name: powerdns
-    sources:
-    - https://github.com/PowerDNS/pdns
-    urls:
-    - powerdns-1.0.0.tgz
-    version: 1.0.0
+      - apiVersion: v2
+        appVersion: "4"
+        created: "2020-07-17T10:46:33.733326-04:00"
+        dependencies:
+          - condition: mariadb.enabled
+            name: mariadb
+            repository: https://charts.bitnami.com/bitnami
+            version: "7"
+        description: A Helm chart to deploy PowerDNS to Kubernetes
+        digest: 1b575004fd523ef77c005ecc41e40dc2bfc0ac2dc8252e8b7ad7dac0397691ec
+        home: https://puckpuck.com
+        icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
+        keywords:
+          - dns
+        maintainers:
+          - email: pierre@pierretessier.com
+            name: puckpuck
+        name: powerdns
+        sources:
+          - https://github.com/PowerDNS/pdns
+        urls:
+          - powerdns-1.1.0.tgz
+        version: 1.1.0
+      - apiVersion: v2
+        appVersion: "4"
+        created: "2020-07-16T22:50:23.101243-04:00"
+        dependencies:
+          - condition: mariadb.enabled
+            name: mariadb
+            repository: https://charts.bitnami.com/bitnami
+            version: "7"
+        description: A Helm chart to deploy PowerDNS to Kubernetes
+        digest: aaedd53673ca7358d8d870cd6fbdfdf919e30df0d388a3040d6f56bb38c76705
+        home: https://puckpuck.com
+        icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
+        keywords:
+          - dns
+        maintainers:
+          - email: pierre@pierretessier.com
+            name: puckpuck
+        name: powerdns
+        sources:
+          - https://github.com/PowerDNS/pdns
+        urls:
+          - powerdns-1.0.0.tgz
+        version: 1.0.0
 generated: "2021-07-21T00:41:58.578516-04:00"
