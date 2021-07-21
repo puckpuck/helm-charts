@@ -11,7 +11,7 @@ env: [ ]
   #   valueFrom:
   #     secretKeyRef:
   #       name: secret-name
-#       key: api-key
+  #       key: api-key
 
 image:
   repository: puckpuck/kspan
