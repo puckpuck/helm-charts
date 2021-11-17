@@ -3,6 +3,29 @@ entries:
   kspan:
   - apiVersion: v2
     appVersion: 0.1.1
+    created: "2021-11-17T19:57:49.973364791Z"
+    description: Install and configure kspan
+    digest: aecca7c8798e7f14e166b0aa540a1c3f4eb0c8d268e2e11d1f7bf5e226133026
+    keywords:
+    - kspan
+    - tracing
+    - observability
+    - o11y
+    maintainers:
+    - email: pierre@pierretessier.com
+      name: puckpuck
+    - email: bjboreham@gmail.com
+      name: bboreham
+    name: kspan
+    sources:
+    - https://github.com/puckpuck/kspan
+    - https://github.com/weaveworks-experiments/kspan
+    type: application
+    urls:
+    - https://github.com/puckpuck/helm-charts/releases/download/kspan-0.2.1/kspan-0.2.1.tgz
+    version: 0.2.1
+  - apiVersion: v2
+    appVersion: 0.1.1
     created: "2021-08-13T17:01:35.221068792Z"
     description: Install and configure kspan
     digest: 944af32a453e0f504e6c90f76c1ef254369fef02dedfeda91b9f56c921b431bf
@@ -117,4 +140,4 @@ entries:
     urls:
     - powerdns-1.0.0.tgz
     version: 1.0.0
-generated: "2021-08-13T17:01:35.295755153Z"
+generated: "2021-11-17T19:57:49.97341141Z"
