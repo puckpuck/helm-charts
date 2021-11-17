@@ -48,9 +48,9 @@ The [values.yaml](values.yaml) file contains information about all configuration
 | --- | --- | --- |
 | `args` | Array of command arguments to pass into the kspan process | `[]` |
 | `env` | Array of environment variables to set on the kspan pod | `[]` |
-| `image.repository` | PowerDNS Image repository | `puckpuck/kspan` |
-| `image.tag` | PowerDNS Image tag (leave blank to use app version) | `nil` |
-| `image.pullPolicy` | PowerDNS Image pull policy | `IfNotPresent` |
+| `image.repository` | kspan Image repository | `puckpuck/kspan` |
+| `image.tag` | kspan Image tag (leave blank to use app version) | `nil` |
+| `image.pullPolicy` | kspan Image pull policy | `IfNotPresent` |
 | `resources` | CPU/Memory resource limits/requests | `{}` |
 | `nodeSelector` | Node labels for pod assignment | `{}` |
 | `tolerations` | Toleration labels for pod assignment | `[]` |
