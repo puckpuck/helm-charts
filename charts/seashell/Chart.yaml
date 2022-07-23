@@ -2,5 +2,15 @@ apiVersion: v2
 name: seashell
 description: A tool that provides a shell to debug Kubernetes workloads
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: 0.1
+keywords:
+  - debug
+  - network
+  - tools
+sources:
+  - https://github.com/puckpuck/seashell
+maintainers:
+  - name: puckpuck
+    email: pierre@pierretessier.com
+
