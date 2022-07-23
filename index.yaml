@@ -163,4 +163,15 @@ entries:
     urls:
     - powerdns-1.0.0.tgz
     version: 1.0.0
-generated: "2022-07-23T01:55:38.534768842Z"
+  seashell:
+  - apiVersion: v2
+    appVersion: "0.1"
+    created: "2022-07-23T02:10:27.799907594Z"
+    description: A tool that provides a shell to debug Kubernetes workloads
+    digest: 2366cb877bda9d70f3b0173986e7c2e3d1ea50511945d24fafb54d9095ff12b3
+    name: seashell
+    type: application
+    urls:
+    - https://github.com/puckpuck/helm-charts/releases/download/seashell-0.1.0/seashell-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-07-23T02:10:27.799944321Z"
