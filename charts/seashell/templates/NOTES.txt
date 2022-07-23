@@ -1,0 +1,10 @@
+seashell is installed. Start an interactive shell on any of the daemonset pods to use it.
+{{- if .Values.rbac.create }}
+
+*** WARNING ***
+
+The seashell Helm chart has configured a ClusterRole with read, list, and watch access to ALL resources in your
+Kubernetes cluster. This is not recommended for any production environment. Use with Caution!
+
+***************
+{{- end }}
