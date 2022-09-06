@@ -26,19 +26,20 @@ helm install seashell puckpuck/seashell
 
 ## Parameters
 
-| Parameter                    | Description                                                | Default                                          |
-|------------------------------|------------------------------------------------------------|--------------------------------------------------|
-| `image.repository`           | seashell Image repository                                  | `puckpuck/seashell`                              |
-| `image.tag`                  | seashell Image tag (leave blank to use app version)        | `nil`                                            |
-| `image.pullPolicy`           | seashell Image pull policy                                 | `IfNotPresent`                                   |
-| `serviceAccount.create`      | Specify whether a ServiceAccount should be created         | `true`                                           |
-| `serviceAccount.annotations` | Annotations to be applied to ServiceAccount                | `{}`                                             |
-| `serviceAccount.name`        | The name of the ServiceAccount to create                   | Generated using the `seashell.fullname` template |
-| `rbac.create`                | Specify whether RBAC resources should be created and used  | `true`                                           |
-| `podAnnotations`             | Pod annotations                                            | `{}`                                             |
-| `podSecurityContext`         | Security context for pod                                   | `{}`                                             | 
-| `securityContext`            | Security context for container                             | `{}`                                             | 
-| `resources`                  | CPU/Memory resource requests/limits                        | `{}`                                             | 
-| `nodeSelector`               | Node labels for pod assignment                             | `{}`                                             | 
-| `tolerations`                | Tolerations for pod assignment                             | `[]`                                             | 
-| `affinity`                   | Map of node/pod affinities                                 | `{}`                                             |
+| Parameter                    | Description                                                            | Default                                          |
+|------------------------------|------------------------------------------------------------------------|--------------------------------------------------|
+| `image.repository`           | seashell Image repository                                              | `puckpuck/seashell`                              |
+| `image.tag`                  | seashell Image tag (leave blank to use app version)                    | `nil`                                            |
+| `image.pullPolicy`           | seashell Image pull policy                                             | `IfNotPresent`                                   |
+| `serviceAccount.create`      | Specify whether a ServiceAccount should be created                     | `true`                                           |
+| `serviceAccount.annotations` | Annotations to be applied to ServiceAccount                            | `{}`                                             |
+| `serviceAccount.name`        | The name of the ServiceAccount to create                               | Generated using the `seashell.fullname` template |
+| `rbac.create`                | Specify whether RBAC resources should be created and used              | `true`                                           |
+| `rbac.readAll`               | Specify whether to include READ permssions on ALL Kubernetes resources | `false`                                          |
+| `podAnnotations`             | Pod annotations                                                        | `{}`                                             |
+| `podSecurityContext`         | Security context for pod                                               | `{}`                                             | 
+| `securityContext`            | Security context for container                                         | `{}`                                             | 
+| `resources`                  | CPU/Memory resource requests/limits                                    | `{}`                                             | 
+| `nodeSelector`               | Node labels for pod assignment                                         | `{}`                                             | 
+| `tolerations`                | Tolerations for pod assignment                                         | `[]`                                             | 
+| `affinity`                   | Map of node/pod affinities                                             | `{}`                                             |

@@ -24,6 +24,8 @@ serviceAccount:
 rbac:
   # Specifies whether to create cluster roles and bindings
   create: true
+  # If set to true, a Role and RoleBinding with READ permissions on ALL objects will be created
+  readAll: false
 
 podAnnotations: { }
 
