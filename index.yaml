@@ -166,6 +166,25 @@ entries:
   seashell:
   - apiVersion: v2
     appVersion: "0.1"
+    created: "2022-11-01T23:09:27.36239571Z"
+    description: A tool that provides a shell to debug Kubernetes workloads
+    digest: 953754ca4837d1f655da92a55c0135969232a491b0b5cf0aad8b7676aa02bf5e
+    keywords:
+    - debug
+    - network
+    - tools
+    maintainers:
+    - email: pierre@pierretessier.com
+      name: puckpuck
+    name: seashell
+    sources:
+    - https://github.com/puckpuck/seashell
+    type: application
+    urls:
+    - https://github.com/puckpuck/helm-charts/releases/download/seashell-0.3.0/seashell-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: "0.1"
     created: "2022-09-06T19:47:12.081305283Z"
     description: A tool that provides a shell to debug Kubernetes workloads
     digest: ccc4c45779b1188e1cd87dd6185d90dbda40de2eba977018dcda6965ed8407d4
@@ -212,4 +231,4 @@ entries:
     urls:
     - https://github.com/puckpuck/helm-charts/releases/download/seashell-0.1.0/seashell-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-06T19:47:12.081339898Z"
+generated: "2022-11-01T23:09:27.362419336Z"
