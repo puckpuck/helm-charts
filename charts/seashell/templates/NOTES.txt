@@ -1,5 +1,5 @@
 seashell is installed. Start an interactive shell on any of the daemonset pods to use it.
-{{- if .Values.rbac.create }}
+{{- if .Values.rbac.readAll }}
 
 *** WARNING ***
 

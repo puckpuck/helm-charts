@@ -1,4 +1,4 @@
-{{- if and .Values.rbac.create .Values.rbac.readAll }}
+{{- if .Values.rbac.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -8,6 +8,7 @@ metadata:
   annotations:
     rbac.authorization.kubernetes.io/autoupdate: "true"
 rules:
+  {{- if .Values.rbac.readAll }}
   - apiGroups:
       - "*"
     resources:
@@ -16,4 +17,6 @@ rules:
       - get
       - list
       - watch
+  {{- end }}
+  {{- toYaml .Values.rbac.extraRules | nindent 2 }}
 {{- end }}

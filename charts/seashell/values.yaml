@@ -12,6 +12,9 @@ imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""
 
+extraVolumeMounts: [ ]
+extraVolumes: [ ]
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -26,6 +29,8 @@ rbac:
   create: true
   # If set to true, a Role and RoleBinding with READ permissions on ALL objects will be created
   readAll: false
+  # additional rules to add to the Role
+  extraRules: [ ]
 
 podAnnotations: { }
 

@@ -31,11 +31,14 @@ helm install seashell puckpuck/seashell
 | `image.repository`           | seashell Image repository                                              | `puckpuck/seashell`                              |
 | `image.tag`                  | seashell Image tag (leave blank to use app version)                    | `nil`                                            |
 | `image.pullPolicy`           | seashell Image pull policy                                             | `IfNotPresent`                                   |
+| `extraVolumeMounts`          | Additional volume mounts to add to the container                       | `[]`                                             |
+| `extraVolumes`               | Additional volumes to add to the pod                                   | `[]`                                             |
 | `serviceAccount.create`      | Specify whether a ServiceAccount should be created                     | `true`                                           |
 | `serviceAccount.annotations` | Annotations to be applied to ServiceAccount                            | `{}`                                             |
 | `serviceAccount.name`        | The name of the ServiceAccount to create                               | Generated using the `seashell.fullname` template |
 | `rbac.create`                | Specify whether RBAC resources should be created and used              | `true`                                           |
 | `rbac.readAll`               | Specify whether to include READ permssions on ALL Kubernetes resources | `false`                                          |
+| `rbac.extraRules`            | Additional rules to add to the ClusterRole                             | `[]`                                             |
 | `podAnnotations`             | Pod annotations                                                        | `{}`                                             |
 | `podSecurityContext`         | Security context for pod                                               | `{}`                                             | 
 | `securityContext`            | Security context for container                                         | `{}`                                             | 

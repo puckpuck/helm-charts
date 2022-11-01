@@ -43,10 +43,12 @@ spec:
             - name: kubernetes
               mountPath: /etc/kubernetes
               readOnly: true
+            {{- toYaml .Values.extraVolumeMounts | nindent 12}}
       volumes:
         - name: kubernetes
           hostPath:
             path: /etc/kubernetes
+        {{- toYaml .Values.extraVolumes | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
