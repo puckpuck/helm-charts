@@ -3,18 +3,6 @@
 Installs and configures [seashell](https://github.com/puckpuck/seashell) to
 provide tools for debugging Kubernetes workloads.
 
-## Warning
-
-The ClusterRole used to set up this tool provides read access to **ALL**
-resources
-in your Kubernetes cluster. This isn't recommended for anything that even comes
-close to a production environment. Please know what the fuck you are doing
-before
-you deploy this thing blindly to your Kubernetes cluster.
-
-You can modify this by setting `rbac.create` to `false` and providing a
-ClusterRole and ClusterRoleBinding for the ServiceAccount used with this tool.
-
 ## Installing the chart
 
 This chart should run without the need to specify any custom chart values.
@@ -25,6 +13,11 @@ helm install seashell puckpuck/seashell
 ```
 
 ## Parameters
+
+> **Warning**
+> Setting `rbac.readAll` to true will grant read access to ALL resources in your Kubernetes cluster. 
+> This isn't recommended for anything that even comes close to a production environment. 
+> Please know what the fuck you are doing before you deploy this thing blindly to your Kubernetes cluster.
 
 | Parameter                    | Description                                                            | Default                                          |
 |------------------------------|------------------------------------------------------------------------|--------------------------------------------------|
