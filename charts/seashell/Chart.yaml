@@ -2,8 +2,8 @@ apiVersion: v2
 name: seashell
 description: A tool that provides a shell to debug Kubernetes workloads
 type: application
-version: 0.3.3
-appVersion: 0.1
+version: 1.0.0
+appVersion: 1.0
 keywords:
   - debug
   - network
