@@ -2,8 +2,8 @@ apiVersion: v2
 name: kspan
 description: Install and configure kspan
 type: application
-version: 0.2.2
-appVersion: 0.1.1
+version: 0.2.3
+appVersion: 0.2
 keywords:
   - kspan
   - tracing
@@ -15,5 +15,3 @@ sources:
 maintainers:
   - name: puckpuck
     email: pierre@pierretessier.com
-  - name: bboreham
-    email: bjboreham@gmail.com
