@@ -3,6 +3,27 @@ entries:
   kspan:
   - apiVersion: v2
     appVersion: "0.2"
+    created: "2023-05-08T21:37:18.259889963Z"
+    description: Install and configure kspan
+    digest: 7532b834eb56c688f5de4c26127b57b9c78179de2d8136b804800b1e909a6cba
+    keywords:
+    - kspan
+    - tracing
+    - observability
+    - o11y
+    maintainers:
+    - email: pierre@pierretessier.com
+      name: puckpuck
+    name: kspan
+    sources:
+    - https://github.com/honeycombio/kspan
+    - https://github.com/weaveworks-experiments/kspan
+    type: application
+    urls:
+    - https://github.com/puckpuck/helm-charts/releases/download/kspan-0.2.4/kspan-0.2.4.tgz
+    version: 0.2.4
+  - apiVersion: v2
+    appVersion: "0.2"
     created: "2023-02-17T17:20:47.344575004Z"
     description: Install and configure kspan
     digest: f426889f7750bfe69059d274912619c2fd4ebfc2df7c1c62a8c457b928a03ba0
@@ -366,4 +387,4 @@ entries:
     urls:
     - https://github.com/puckpuck/helm-charts/releases/download/seashell-0.1.0/seashell-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-17T17:20:47.344622546Z"
+generated: "2023-05-08T21:37:18.259936313Z"
