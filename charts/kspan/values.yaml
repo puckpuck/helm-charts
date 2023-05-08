@@ -4,7 +4,7 @@
 args: [ ]
   # - --otlp-addr=otlp-enabled-service:443
   # - --otlp-headers=api-key=$(MY_API_KEY)
-# - --otlp-secured
+  # - --otlp-secured
 
 env: [ ]
   # - name: MY_API_KEY
@@ -14,7 +14,7 @@ env: [ ]
   #       key: api-key
 
 image:
-  repository: puckpuck/kspan
+  repository: ghcr.io/honeycombio/kspan/kspan
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""

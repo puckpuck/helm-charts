@@ -2,7 +2,7 @@ apiVersion: v2
 name: kspan
 description: Install and configure kspan
 type: application
-version: 0.2.3
+version: 0.2.4
 appVersion: 0.2
 keywords:
   - kspan
@@ -10,7 +10,7 @@ keywords:
   - observability
   - o11y
 sources:
-  - https://github.com/puckpuck/kspan
+  - https://github.com/honeycombio/kspan
   - https://github.com/weaveworks-experiments/kspan
 maintainers:
   - name: puckpuck
