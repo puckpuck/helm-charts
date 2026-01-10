@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "powerdns.fullname" . }}-postgres
+  labels:
+    app: {{ include "powerdns.name" . }}-postgres
+    release: {{ .Release.Name }}
+spec:
+  serviceName: {{ include "powerdns.fullname" . }}-postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "powerdns.name" . }}-postgres
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "powerdns.name" . }}-postgres
+        release: {{ .Release.Name }}
+      annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/config-db-init.yaml") . | sha256sum }}
+    spec:
+      containers:
+      - name: postgres
+        image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag | default "18-alpine" }}"
+        imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: db-user
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: db-password
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: db-name
+        ports:
+          - name: postgres
+            containerPort: 5432
+            protocol: TCP
+        volumeMounts:
+        - name: db-init
+          mountPath: /docker-entrypoint-initdb.d
+        resources:
+{{ toYaml .Values.postgres.resources | indent 12 }}
+      volumes:
+      - name: db-init
+        configMap:
+          name: {{ include "powerdns.fullname" . }}-db-init
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

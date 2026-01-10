@@ -1,16 +1,11 @@
 apiVersion: v2
 name: powerdns
 description: Deploy PowerDNS with configured domains
-version: 1.1.1
-appVersion: 4
+version: 2.0.0
+appVersion: "5.0"
 keywords:
   - dns
 home: https://puckpuck.com
-dependencies:
-- name: mariadb
-  version: 7
-  repository: https://charts.bitnami.com/bitnami
-  condition: mariadb.enabled
 sources:
   - https://github.com/PowerDNS/pdns
 icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png

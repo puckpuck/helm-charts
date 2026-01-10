@@ -2,36 +2,80 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+
+##
+## PowerDNS configuration
+##
 powerdns:
-  api:
-    key: PowerDNSAPI
+  apikey: PowerDNSAPI
+  webserver_allow_from: "192.168.0.0/16,172.16.0.0/16"
   initDomains: []
 
+  service:
+    type: ClusterIP
+    # annotations: {}
+    # ip
+  image:
+    repository: pschiffe/pdns-pgsql
+    # leave tag blank to use app version
+    tag:
+    pullPolicy: IfNotPresent
+  resources: {}
 
-replicaCount: 1
+powerdnsadmin:
+  enabled: true
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: false
+    annotations: {}
+    hosts:
+      - host: powerdnsadmin.my.domain.com
+        paths:
+          - path: /
+            pathType: Prefix
+  image:
+    repository: pschiffe/pdns-admin
+    tag: 0.4.1
+    pullPolicy: IfNotPresent
+  resources: {}
 
-image:
-  repository: psitrax/powerdns
-  # leave tag blank to use app version
-  tag:
-  pullPolicy: IfNotPresent
 
-service:
-  type: ClusterIP
-  # annotations: {}
-  # ip
+##
+## PostgreSQL Database configuration
+##
+postgres:
+  user: powerdns
+  password: powerdns
+  name: powerdns
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #  cpu: 100m
-  #  memory: 128Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 128Mi
+  service:
+    type: ClusterIP
+  image:
+    repository: postgres
+    tag: 18-alpine
+    pullPolicy: IfNotPresent  
+  resources: {}
+
+
+adminer:
+  enabled: true
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: false
+    annotations: {}
+    hosts:
+      - host: adminer.my.domain.com
+        paths:
+          - path: /
+            pathType: Prefix
+  image:
+    repository: adminer
+    tag: 5
+    pullPolicy: IfNotPresent
+  resources: {}
+
 
 nodeSelector: {}
 
@@ -39,28 +83,3 @@ tolerations: []
 
 affinity: {}
 
-##
-## MariaDB chart configuration
-##
-mariadb:
-  enabled: true
-
-  rootUser:
-    password: 
-
-  db:
-    ## MariaDB username and password
-    user: powerdns
-    password: powerdns
-    ## Database to create
-    name: powerdns
-
-  replication:
-    enabled: false
-
-  master:
-    persistence:
-      enabled: false
-
-  tests:
-    enabled: false

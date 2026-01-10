@@ -1,0 +1,43 @@
+{{- if .Values.adminer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "powerdns.fullname" . }}-adminer
+  labels:
+    app: {{ include "powerdns.name" . }}-adminer
+    release: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "powerdns.name" . }}-adminer
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "powerdns.name" . }}-adminer
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: adminer
+        image: "{{ .Values.adminer.image.repository }}:{{ .Values.adminer.image.tag }}"
+        imagePullPolicy: {{ .Values.adminer.image.pullPolicy }}
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+        resources:
+{{ toYaml .Values.adminer.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+{{- end }}

@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "powerdns.fullname" . }}
+  labels:
+    app: {{ include "powerdns.name" . }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "powerdns.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "powerdns.name" . }}
+        release: {{ .Release.Name }}
+      annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        checksum/config: {{ include (print $.Template.BasePath "/config-db-init.yaml") . | sha256sum }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.powerdns.image.repository }}:{{ .Values.powerdns.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.powerdns.image.pullPolicy }}
+        env:
+          - name: PDNS_gpgsql_host
+            value: powerdns-postgres
+          - name: PDNS_gpgsql_port
+            value: "5432"
+          - name: PDNS_gpgsql_user
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: db-user
+          - name: PDNS_gpgsql_password
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: db-password
+          - name: PDNS_gpgsql_dbname
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: db-name
+          - name: PDNS_primary
+            value: "yes"
+          - name: PDNS_api
+            value: "yes"
+          - name: PDNS_api_key
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: api-key
+          - name: PDNS_webserver
+            value: "yes"
+          - name: PDNS_webserver_address
+            value: "0.0.0.0"
+          - name: PDNS_webserver_allow_from
+            value: {{ .Values.powerdns.webserver_allow_from }}
+
+        ports:
+          - name: dns-udp
+            containerPort: 53
+            protocol: UDP
+          - name: dns-tcp
+            containerPort: 53
+            protocol: TCP
+          - name: api
+            containerPort: 8081
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: api
+        readinessProbe:
+          httpGet:
+            path: /
+            port: api           
+        resources:
+{{ toYaml .Values.resources | indent 12 }}   
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

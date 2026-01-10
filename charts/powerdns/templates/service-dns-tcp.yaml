@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "powerdns.fullname" . }}-dns-tcp
+  name: {{ include "powerdns.fullname" . }}-dns-tcp
   labels:
-    app: {{ template "powerdns.name" . }}
+    app: {{ include "powerdns.name" . }}
   annotations:
-{{ toYaml .Values.service.annotations | indent 4 }}
+{{ toYaml .Values.powerdns.service.annotations | indent 4 }}
 spec:
-  type: {{ .Values.service.type }}
-  {{- if .Values.service.ip }}
-  loadBalancerIP: {{ .Values.service.ip }}
+  type: {{ .Values.powerdns.service.type }}
+  {{- if .Values.powerdns.service.ip }}
+  loadBalancerIP: {{ .Values.powerdns.service.ip }}
   {{- end}}
   ports:
     - port: 53
@@ -17,5 +17,5 @@ spec:
       protocol: TCP
       name: dns-tcp
   selector:
-    app: {{ template "powerdns.name" . }}
+    app: {{ include "powerdns.name" . }}
     release: {{ .Release.Name }}
