@@ -137,6 +137,24 @@ entries:
     version: 0.1.0
   powerdns:
   - apiVersion: v2
+    appVersion: "5.0"
+    created: "2026-01-10T04:17:11.10713224Z"
+    description: Deploy PowerDNS with configured domains
+    digest: 0071e5d4d935906b9807aac7b880ecf6546bd31e4e8213adcf40952c27fe2f3b
+    home: https://puckpuck.com
+    icon: https://github.com/puckpuck/helm-charts/tree/master/powerdns/powerdns.png
+    keywords:
+    - dns
+    maintainers:
+    - email: pierre@pierretessier.com
+      name: puckpuck
+    name: powerdns
+    sources:
+    - https://github.com/PowerDNS/pdns
+    urls:
+    - https://github.com/puckpuck/helm-charts/releases/download/powerdns-2.0.0/powerdns-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     appVersion: "4"
     created: "2021-03-11T03:20:11.037689804Z"
     dependencies:
@@ -406,4 +424,4 @@ entries:
     urls:
     - https://github.com/puckpuck/helm-charts/releases/download/seashell-0.1.0/seashell-0.1.0.tgz
     version: 0.1.0
-generated: "2023-10-13T02:14:50.658195406Z"
+generated: "2026-01-10T04:17:11.107204336Z"
