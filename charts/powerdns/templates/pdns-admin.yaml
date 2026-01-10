@@ -1,0 +1,73 @@
+{{- if .Values.powerdnsadmin.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "powerdns.fullname" . }}-pdns-admin
+  labels:
+    app: {{ include "powerdns.name" . }}-pdns-admin
+    release: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "powerdns.name" . }}-pdns-admin
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "powerdns.name" . }}-pdns-admin
+        release: {{ .Release.Name }}
+      annotations:
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+    spec:
+      containers:
+      - name: pdns-admin
+        image: "{{ .Values.powerdnsadmin.image.repository }}:{{ .Values.powerdnsadmin.image.tag }}"
+        imagePullPolicy: {{ .Values.powerdnsadmin.image.pullPolicy }}
+        env:
+          - name: PDNS_ADMIN_SQLA_DB_TYPE
+            value: "postgres"
+          - name: PDNS_ADMIN_SQLA_DB_HOST
+            value: "powerdns-postgres"
+          - name: PDNS_ADMIN_SQLA_DB_PORT
+            value: "5432"
+          - name: PDNS_ADMIN_SQLA_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: db-user
+          - name: PDNS_ADMIN_SQLA_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: db-password
+          - name: PDNS_ADMIN_SQLA_DB_NAME
+            value: "powerdnsadmin"
+          - name: PDNS_API_URL
+            value: "http://{{ include "powerdns.fullname" . }}-api:8081/"
+          - name: PDNS_VERSION
+            value: "5.0"
+          - name: PDNS_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "powerdns.fullname" . }}
+                key: api-key
+        ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+        resources:
+{{ toYaml .Values.powerdnsadmin.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+{{- end }}

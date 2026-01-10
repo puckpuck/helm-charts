@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "powerdns.fullname" . }}-postgres
+  labels:
+    app: {{ include "powerdns.name" . }}-postgres
+  annotations:
+{{ toYaml .Values.postgres.service.annotations | indent 4 }}
+spec:
+  type: {{ .Values.postgres.service.type }}
+  {{- if .Values.postgres.service.ip }}
+  loadBalancerIP: {{ .Values.postgres.service.ip }}
+  {{- end}}
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: postgres
+  selector:
+    app: {{ include "powerdns.name" . }}-postgres
+    release: {{ .Release.Name }}

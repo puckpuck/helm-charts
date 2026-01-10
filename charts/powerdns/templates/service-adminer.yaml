@@ -1,0 +1,23 @@
+{{- if .Values.adminer.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "powerdns.fullname" . }}-adminer
+  labels:
+    app: {{ include "powerdns.name" . }}-adminer
+  annotations:
+{{ toYaml .Values.adminer.service.annotations | indent 4 }}
+spec:
+  type: {{ .Values.adminer.service.type }}
+  {{- if .Values.adminer.service.ip }}
+  loadBalancerIP: {{ .Values.adminer.service.ip }}
+  {{- end}}
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "powerdns.name" . }}-adminer
+    release: {{ .Release.Name }}
+{{- end }}

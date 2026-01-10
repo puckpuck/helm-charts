@@ -1,0 +1,23 @@
+{{- if .Values.powerdnsadmin.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "powerdns.fullname" . }}-pdns-admin
+  labels:
+    app: {{ include "powerdns.name" . }}-pdns-admin
+  annotations:
+{{ toYaml .Values.powerdnsadmin.service.annotations | indent 4 }}
+spec:
+  type: {{ .Values.powerdnsadmin.service.type }}
+  {{- if .Values.powerdnsadmin.service.ip }}
+  loadBalancerIP: {{ .Values.powerdnsadmin.service.ip }}
+  {{- end}}
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "powerdns.name" . }}-pdns-admin
+    release: {{ .Release.Name }}
+{{- end }}
