@@ -107,9 +107,26 @@ data:
     CREATE UNIQUE INDEX namealgoindex ON tsigkeys(name, algorithm);
 
     {{ range .Values.powerdns.initDomains }}
-    INSERT INTO domains (name, type, notified_serial) 
+    INSERT INTO domains (name, type, notified_serial)
     VALUES ('{{ . }}', 'MASTER', 24);
-    
+
     INSERT INTO records (domain_id, name, type, content, ttl, prio)
-    VALUES (1, '{{ . }}', 'SOA', 'k8s.powerdns.server hostmaster.{{ . }} 24 60 60 60 60', 60, 0);
+    VALUES (
+      (SELECT id FROM domains WHERE name = '{{ . }}'),
+      '{{ . }}', 'SOA', 'k8s.powerdns.server hostmaster.{{ . }} 24 60 60 60 60', 60, 0
+    );
+
+    INSERT INTO records (domain_id, name, type, content, ttl, prio)
+    VALUES (
+      (SELECT id FROM domains WHERE name = '{{ . }}'),
+      '{{ . }}', 'NS', 'ns.{{ . }}', 60, 0
+    );
+
+    {{- if $.Values.powerdns.service.ip }}
+    INSERT INTO records (domain_id, name, type, content, ttl, prio)
+    VALUES (
+      (SELECT id FROM domains WHERE name = '{{ . }}'),
+      'ns.{{ . }}', 'A', '{{ $.Values.powerdns.service.ip }}', 60, 0
+    );
+    {{- end }}
     {{- end }}
