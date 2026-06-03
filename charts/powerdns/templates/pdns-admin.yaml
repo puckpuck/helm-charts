@@ -28,7 +28,7 @@ spec:
           - name: PDNS_ADMIN_SQLA_DB_TYPE
             value: "postgres"
           - name: PDNS_ADMIN_SQLA_DB_HOST
-            value: "powerdns-postgres"
+            value: "{{ include "powerdns.fullname" . }}-postgres"
           - name: PDNS_ADMIN_SQLA_DB_PORT
             value: "5432"
           - name: PDNS_ADMIN_SQLA_DB_USER
