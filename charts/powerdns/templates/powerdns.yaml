@@ -26,7 +26,7 @@ spec:
         imagePullPolicy: {{ .Values.powerdns.image.pullPolicy }}
         env:
           - name: PDNS_gpgsql_host
-            value: powerdns-postgres
+            value: "{{ include "powerdns.fullname" . }}-postgres"
           - name: PDNS_gpgsql_port
             value: "5432"
           - name: PDNS_gpgsql_user
